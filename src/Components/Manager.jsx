@@ -1,12 +1,39 @@
 import React from 'react'
+import { useRef } from 'react'
+import { useState } from 'react';
 
-const Manager = () => {
+const Manager = ({ passwordArray, setPasswordArray }) => {
+    const [form, setform] = useState({site: "", username: "", password: ""})
+    const iconRef = useRef(null);
+
+    const savePassword = () => {
+        // Logic to save password
+        setPasswordArray([...passwordArray, form]);
+        console.log(passwordArray);
+        localStorage.setItem("passwords", JSON.stringify([...passwordArray, form]));
+        console.log([...passwordArray, form]);
+    }
+
     const showPassword = () => {
         // Logic to toggle password visibility
-        
+        const passwordInput = document.getElementById('passwordInput');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            iconRef.current.src = "../../icons/eye_cross.png";
+        } else {
+            passwordInput.type = 'password';
+            iconRef.current.src = "../../icons/eye.png";
+        }
     }
+
+
+    const handleChange = (e) => {
+        const {name, value} = e.target;
+        setform({...form, [name]: value});
+    }
+
     return (
-        <div>
+        <div className='mx-5 my-5'>
             {/* background from bg.ibelick.com */}
             <div className="absolute bg-white bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(120,119,198,0.3),rgba(255,255,255,0))]"></div>
 
@@ -18,18 +45,20 @@ const Manager = () => {
                     <span className='text-green-600'>Guard/&gt;</span></h1>
                 <p className='text-green-900 text-lg text-center'>Your own Password Manager</p>
                 <div className="relative text-white flex flex-col  max-w-2xl p-4 gap-4 mx-auto">
-                    <input placeholder='Enter website URL' className='border border-green-700 bg-green-75 rounded-full text-black px-4 py-1' type="text" name='' id='' />
+                    <input value={form.site} onChange={handleChange} placeholder='Enter website URL' className='border border-green-700 bg-green-75 rounded-full text-black px-4 py-1' type="text" name='site' />
                     <div className="flex gap-4">
-                        <input placeholder='Enter Username / Email' className='border border-green-700 bg-green-75 rounded-full text-black px-4 py-1 w-1/2' type="text" name='' id='' />
+                        <input value={form.username} onChange={handleChange} placeholder='Enter Username / Email' className='border border-green-700 bg-green-75 rounded-full text-black px-4 py-1 w-1/2' type="text" name='username'  />
 
                         <div className="relative">
-                            <input placeholder='Enter Password' className='border border-green-700 w-full bg-green-75 rounded-full text-black px-4 py-1' type="password" name='' id='' />
-                            <span className='absolute right-0.75 top-1 cursor-pointer text-green-700' onClick={showPassword}>SHOW</span>
+                            <input value={form.password} onChange={handleChange} placeholder='Enter Password' className='border border-green-700 w-full bg-green-75 rounded-full text-black px-4 py-1' type="password" name='password' id='passwordInput' />
+                            <span className='absolute right-1.5 top-1 cursor-pointer text-green-700 w-6' onClick={showPassword}>
+                                <img ref={iconRef} src="../../icons/eye.png" alt="" />
+                            </span>
                         </div>
                     </div>
 
-                    <button className='flex justify-center items-center gap-3 max-w-50 mx-auto bg-green-700 hover:bg-green-800 text-white px-4 py-1 rounded-full'>
-                        <span className='text-xl font-bold'>Add Password</span>
+                    <button onClick={savePassword} className='flex justify-center items-center gap-3 min-w-52 max-w-52 mx-auto bg-green-700 hover:bg-green-800 text-white px-4 py-1 rounded-full'>
+                        <span className='text-lg font-semibold'>Add Password</span>
                         <span className='flex items-center'><lord-icon
                             src="https://cdn.lordicon.com/ueoydrft.json"
                             trigger="hover"
