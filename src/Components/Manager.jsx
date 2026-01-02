@@ -1,18 +1,33 @@
 import React from 'react'
 import { useRef } from 'react'
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { toast } from 'react-toastify';
 
-const Manager = ({ passwordArray, setPasswordArray }) => {
-    const [form, setform] = useState({site: "", username: "", password: ""})
+
+const Manager = ({ passwordArray, setPasswordArray, form, setForm }) => {
+    
     const iconRef = useRef(null);
 
     const savePassword = () => {
         // Logic to save password
-        setPasswordArray([...passwordArray, form]);
+        setPasswordArray([...passwordArray, {...form, id: uuidv4()}]);
         console.log(passwordArray);
-        localStorage.setItem("passwords", JSON.stringify([...passwordArray, form]));
-        console.log([...passwordArray, form]);
+        localStorage.setItem("passwords", JSON.stringify([...passwordArray, {...form, id: uuidv4()}]));
+        console.log([...passwordArray, {...form, id: uuidv4()}]);
+        setForm({site: "", username: "", password: ""});
+        toast('Password Saved Successfully!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: false,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light"
+        });
     }
+
 
     const showPassword = () => {
         // Logic to toggle password visibility
@@ -29,7 +44,7 @@ const Manager = ({ passwordArray, setPasswordArray }) => {
 
     const handleChange = (e) => {
         const {name, value} = e.target;
-        setform({...form, [name]: value});
+        setForm({...form, [name]: value});
     }
 
     return (
@@ -51,14 +66,14 @@ const Manager = ({ passwordArray, setPasswordArray }) => {
 
                         <div className="relative">
                             <input value={form.password} onChange={handleChange} placeholder='Enter Password' className='border border-green-700 w-full bg-green-75 rounded-full text-black px-4 py-1' type="password" name='password' id='passwordInput' />
-                            <span className='absolute right-1.5 top-1 cursor-pointer text-green-700 w-6' onClick={showPassword}>
+                            <span className='absolute right-1.5 top-1 cursor-pointer text-green-700 w-6 hover:scale-110 transition-transform' onClick={showPassword}>
                                 <img ref={iconRef} src="../../icons/eye.png" alt="" />
                             </span>
                         </div>
                     </div>
 
-                    <button onClick={savePassword} className='flex justify-center items-center gap-3 min-w-52 max-w-52 mx-auto bg-green-700 hover:bg-green-800 text-white px-4 py-1 rounded-full'>
-                        <span className='text-lg font-semibold'>Add Password</span>
+                    <button onClick={savePassword} className='flex justify-center items-center gap-3 max-w-52 mx-auto bg-green-700 hover:bg-green-800 text-white px-4 py-1 rounded-full'>
+                        <span className='text-xl font-semibold -mt-1'>Save</span>
                         <span className='flex items-center'><lord-icon
                             src="https://cdn.lordicon.com/ueoydrft.json"
                             trigger="hover"

@@ -22,13 +22,16 @@ const Navbar = () => {
                     Pass
                     <span className='text-green-600'>Guard/&gt;</span>
                </div>
-                <ul>
+                {/* <ul>
                     <li className='flex gap-4 text-lg'>
                         <a className='hover:font-bold hover:text-xl transition-all' href="/">Home</a>
                         <a className='hover:font-bold hover:text-xl transition-all' href="/">About</a>
                         <a className='hover:font-bold hover:text-xl transition-all' href="/">Contact</a>
                     </li>
-                </ul>
+                </ul> */}
+                <button className='text-white hover:scale-110 transition-transform'>
+                    <img className='w-6' src="/icons/github-mark-white.svg" alt="github_logo" />
+                </button>
             </div>
         </nav>
     );
