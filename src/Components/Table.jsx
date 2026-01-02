@@ -38,32 +38,35 @@ const Table = ({ passwordArray, deletePassword, editPassword }) => {
                 {passwordArray.length === 0 && (<p className='text-green-700 px-4'>No passwords saved yet.</p>
                 )}
                 {passwordArray.length > 0 && (
-                    <table className="table-auto w-full rounded-md overflow-hidden">
-                        <thead className='bg-green-800 text-white'>
-                            <tr>
-                                <th className='py-2 px-4 text-left'>Site</th>
-                                <th className='py-2 px-4 text-left'>Username</th>
-                                <th className='py-2 px-4 text-left'>Password</th>
-                                <th className='py-2 px-4 text-left'>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody className='bg-white'>
-                            {passwordArray.map((item, index) => {
-                                return <tr key={index} className='border-b border-green-100 hover:bg-green-50'>
-                                    <td className='py-2 px-4'><a href={item.site} target='_blank'>{item.site}</a></td>
-                                    <td className='py-2 px-4'>{item.username}</td>
-                                    <td className='py-2 px-4 flex justify-between'>{"•".repeat(item.password.length)}
-                                        <img onClick={() => { copyText(item.password) }} className='w-4 h-4 hover:scale-110 transition-transform cursor-pointer' src="/icons/copy.png" alt="copy icon" />
-                                    </td>
-                                    <td className='py-2 px-4 '>
-                                        <div className='flex gap-4 justify-center items-center align-middle -mt-2'>
-                                            <span><img className='w-4 h-4 hover:scale-110 transition-transform cursor-pointer' onClick={() => { editPassword(item.id) }} src="/icons/edit.png" alt="edit icon"/></span>
-                                            <span><img className='w-4 h-4 hover:scale-110 transition-transform cursor-pointer' onClick={() => {deletePassword(item.id)}} src="/icons/delete.png" alt="delete icon" /></span></div>
-                                    </td>
+                    <div className="overflow-x-auto">
+                        <table className="table-auto w-full rounded-md overflow-hidden">
+                            <thead className='bg-green-800 text-white'>
+                                <tr>
+                                    <th className='py-2 px-4 text-left'>Site</th>
+                                    <th className='py-2 px-4 text-left'>Username</th>
+                                    <th className='py-2 px-4 text-left'>Password</th>
+                                    <th className='py-2 px-4 text-left'>Actions</th>
                                 </tr>
-                            })}
-                        </tbody>
-                    </table>)}
+                            </thead>
+                            <tbody className='bg-white'>
+                                {passwordArray.map((item, index) => {
+                                    return <tr key={index} className='border-b border-green-100 hover:bg-green-50'>
+                                        <td className='py-2 px-4'><a href={item.site} target='_blank'>{item.site}</a></td>
+                                        <td className='py-2 px-4'>{item.username}</td>
+                                        <td className='py-2 px-4 flex justify-between'>{"•".repeat(item.password.length)}
+                                            <img onClick={() => { copyText(item.password) }} className='w-4 h-4 hover:scale-110 transition-transform cursor-pointer' src="/icons/copy.png" alt="copy icon" />
+                                        </td>
+                                        <td className='py-2 px-4 '>
+                                            <div className='flex gap-4 justify-center items-center align-middle -mt-2'>
+                                                <span><img className='w-4 h-4 hover:scale-110 transition-transform cursor-pointer' onClick={() => { editPassword(item.id) }} src="/icons/edit.png" alt="edit icon"/></span>
+                                                <span><img className='w-4 h-4 hover:scale-110 transition-transform cursor-pointer' onClick={() => {deletePassword(item.id)}} src="/icons/delete.png" alt="delete icon" /></span></div>
+                                        </td>
+                                    </tr>
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
             </div>
         </div>
     )

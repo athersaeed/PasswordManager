@@ -58,12 +58,14 @@ function App() {
   }
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <Navbar />
-      <Manager passwordArray={passwordArray} setPasswordArray={setPasswordArray} form={form} setForm={setForm} />
-      <Table passwordArray={passwordArray} deletePassword={deletePassword} editPassword={editPassword} />
+      <div className="grow">
+        <Manager passwordArray={passwordArray} setPasswordArray={setPasswordArray} form={form} setForm={setForm} />
+        <Table passwordArray={passwordArray} deletePassword={deletePassword} editPassword={editPassword} />
+      </div>
       <Footer />
-    </>
+    </div>
   )
 }
 

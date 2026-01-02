@@ -11,6 +11,19 @@ const Manager = ({ passwordArray, setPasswordArray, form, setForm }) => {
 
     const savePassword = () => {
         // Logic to save password
+        if(!form.site.length > 3 || !form.username.length > 3 || !form.password.length > 3){
+            toast('Please fill all fields correctly!', {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: false,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "light"
+            });
+            return;
+        }
         setPasswordArray([...passwordArray, {...form, id: uuidv4()}]);
         console.log(passwordArray);
         localStorage.setItem("passwords", JSON.stringify([...passwordArray, {...form, id: uuidv4()}]));
@@ -61,10 +74,10 @@ const Manager = ({ passwordArray, setPasswordArray, form, setForm }) => {
                 <p className='text-green-900 text-lg text-center'>Your own Password Manager</p>
                 <div className="relative text-white flex flex-col  max-w-2xl p-4 gap-4 mx-auto">
                     <input value={form.site} onChange={handleChange} placeholder='Enter website URL' className='border border-green-700 bg-green-75 rounded-full text-black px-4 py-1' type="text" name='site' />
-                    <div className="flex gap-4">
-                        <input value={form.username} onChange={handleChange} placeholder='Enter Username / Email' className='border border-green-700 bg-green-75 rounded-full text-black px-4 py-1 w-1/2' type="text" name='username'  />
+                    <div className="flex flex-col md:flex-row gap-4">
+                        <input value={form.username} onChange={handleChange} placeholder='Enter Username / Email' className='border border-green-700 bg-green-75 rounded-full text-black px-4 py-1 w-full md:w-1/2' type="text" name='username'  />
 
-                        <div className="relative">
+                        <div className="relative w-full md:w-1/2">
                             <input value={form.password} onChange={handleChange} placeholder='Enter Password' className='border border-green-700 w-full bg-green-75 rounded-full text-black px-4 py-1' type="password" name='password' id='passwordInput' />
                             <span className='absolute right-1.5 top-1 cursor-pointer text-green-700 w-6 hover:scale-110 transition-transform' onClick={showPassword}>
                                 <img ref={iconRef} src="../../icons/eye.png" alt="" />
